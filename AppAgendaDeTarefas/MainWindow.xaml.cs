@@ -60,4 +60,23 @@ public partial class MainWindow : Window
             listaTarefas.Add(descricao);
         }
     }
+    
+    private void Editartarefa_OnClick(object sender, RoutedEventArgs e)
+    {
+        // Verifica se existe uma tarefa selecionada
+        if (ListaTarefas.SelectedItem != null)
+        {
+            // Pega o índice do item selecionado
+            int index = ListaTarefas.SelectedIndex;
+
+            // Edita a tarefa no ListBox usando o texto do TextBox de edição
+            ListaTarefas.Items[index] = TxtTarefa.Text;
+
+            MessageBox.Show("Tarefa editada com sucesso!");
+        }
+        else
+        {
+            MessageBox.Show("Selecione uma tarefa para editar!");
+        }
+    }
 }
