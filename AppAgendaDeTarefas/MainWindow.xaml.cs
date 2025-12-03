@@ -37,6 +37,7 @@ public partial class MainWindow : Window
             ListaTarefas.Items.Add(TxtTarefa.Text);
             AdicionarTarefas();
             TxtTarefa.Clear();
+            TxtTarefa.Focus();
         }
         else
         {
@@ -50,7 +51,6 @@ public partial class MainWindow : Window
     {
         if (ListaTarefas.Items.Count > 0)
         {
-
             ListaTarefas.Items.Clear();
 
             MessageBox.Show("A lista foi limpa com sucesso!", "Limpeza");
@@ -110,11 +110,9 @@ public partial class MainWindow : Window
         {
             MessageBox.Show("Selecione uma tarefa para duplicar!", "Duplicar", MessageBoxButton.OK,
                 MessageBoxImage.Information);
-
         }
 
         ContadorTarefa();
-
     }
 
     private void ContadorTarefa()
@@ -133,7 +131,7 @@ public partial class MainWindow : Window
         //Verifica se não existe nenhuma tarefa selecionada.
         if (selectedIndex == -1)
         {
-            MessageBox.Show("Selecione uma tarefa para movimentá-la!", 
+            MessageBox.Show("Selecione uma tarefa para movimentá-la!",
                 "Mover", MessageBoxButton.OK, MessageBoxImage.Information);
             return;
         }
@@ -145,7 +143,7 @@ public partial class MainWindow : Window
                 "Mover", MessageBoxButton.OK, MessageBoxImage.Warning);
             return;
         }
-        
+
         string tarefaParaMover = ListaTarefas.SelectedItem as string;
 
         // Remove a tarefa da posição atual
@@ -157,9 +155,10 @@ public partial class MainWindow : Window
         // Atualiza a seleção para o novo índice
         ListaTarefas.SelectedIndex = selectedIndex - 1;
 
-        MessageBox.Show("Tarefa movida para cima com sucesso!", 
+        MessageBox.Show("Tarefa movida para cima com sucesso!",
             "Mover", MessageBoxButton.OK, MessageBoxImage.Information);
     }
+
     private void BtnMoverTarefaDown_Click(object sender, RoutedEventArgs e)
     {
         // Obtem o índice da tarefa selecionada.
@@ -168,20 +167,20 @@ public partial class MainWindow : Window
         //Verifica se não existe nenhuma tarefa selecionada.
         if (selectedIndex == -1)
         {
-            MessageBox.Show("Selecione uma tarefa para movimentá-la!", 
+            MessageBox.Show("Selecione uma tarefa para movimentá-la!",
                 "Mover", MessageBoxButton.OK, MessageBoxImage.Information);
             return;
         }
 
         //Verifica se a tarefa já está no final da lista
-         if (selectedIndex == ListaTarefas.Items.Count -1)
+        if (selectedIndex == ListaTarefas.Items.Count - 1)
         {
             MessageBox.Show("A tarefa já está posicionada no final da lista!",
                 "Mover", MessageBoxButton.OK, MessageBoxImage.Warning);
             return;
         }
-        
-        
+
+
         string tarefaParaMover = ListaTarefas.SelectedItem as string;
 
         // Remove a tarefa da posição atual
@@ -193,9 +192,25 @@ public partial class MainWindow : Window
         // Atualiza a seleção para o novo índice
         ListaTarefas.SelectedIndex = selectedIndex + 1;
 
-        MessageBox.Show("Tarefa movida para baixo com sucesso!", 
+        MessageBox.Show("Tarefa movida para baixo com sucesso!",
             "Mover", MessageBoxButton.OK, MessageBoxImage.Information);
-        
     }
-    
+
+    private void BtnConcluida_OnClick(object sender, RoutedEventArgs e)
+    {
+        if (ListaTarefas.SelectedItem != null)
+        {
+            int index = ListaTarefas.SelectedIndex;
+            string selecao = ListaTarefas.SelectedItem.ToString();
+
+            if (!selecao.EndsWith("✅"))
+            {
+                selecao += "✅";
+                MessageBox.Show($"Status da tarefa: Concluida!",
+                    "Gerenciador de Tarefas", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            
+            ListaTarefas.Items[index] = selecao;
+        }
+    }
 }
